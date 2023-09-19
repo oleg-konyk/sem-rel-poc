@@ -4,7 +4,7 @@
     "main",
     {name: "beta", prerelease: true},
     {name: "alpha", prerelease: true},
-    {name: "feat/**", prerelease: '${name.replace(/^feat\\//g, "")}'}
+    {name: "feat/**", prerelease: true}
   ],
   "plugins": [
     [
