@@ -1,6 +1,6 @@
 const child_process = require("child_process");
 
-const branchName = child_process.execSync('git rev-parse --abbrev-ref HEAD');
+const branchName = child_process.execSync('git rev-parse --abbrev-ref HEAD').toString();
 const sanitizedBranchName = branchName.includes("feat/") ? branchName.replace("feat/", "") : branchName.replace("/", "");
 
 console.log(">>>>>>", sanitizedBranchName)
