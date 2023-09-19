@@ -1,7 +1,7 @@
 const child_process = require("child_process");
 
 const branchName = child_process.execSync('git rev-parse --abbrev-ref HEAD').toString();
-const sanitizedBranchName = branchName.includes("feat/") ? branchName.replace("feat/", "") : branchName.replace("/", "");
+const sanitizedBranchName = branchName.includes("feat/") ? branchName.replace("feat/", "") : branchName.replace("/", "-");
 
 console.log(">>>>>>", sanitizedBranchName)
 
@@ -11,7 +11,7 @@ module.exports = {
     "main",
     {name: "beta", prerelease: true},
     {name: "alpha", prerelease: true},
-    { name: "feat/**", prerelease:  sanitizedBranchName}
+    { name: "feat/**", prerelease:  sanitizedBranchName.trim()}
   ],
   "plugins": [
     [
