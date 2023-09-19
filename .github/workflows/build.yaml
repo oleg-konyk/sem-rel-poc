@@ -5,7 +5,7 @@ on:
       - main
       - feat/**
       - pre/**
-      - pre-**
+      - feat-**
 
 permissions:
   contents: read # for checkout
