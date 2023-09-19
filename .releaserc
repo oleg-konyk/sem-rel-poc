@@ -4,7 +4,7 @@
     "main",
     {name: "beta", prerelease: true},
     {name: "alpha", prerelease: true},
-    { name: "pre/rc", channel: "pre/rc", prerelease: "rc" }
+    { name: "pre/**", prerelease: "**" }
   ],
   "plugins": [
     [
