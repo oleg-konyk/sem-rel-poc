@@ -1,9 +1,16 @@
 const child_process = require("child_process");
 
-const branchName = child_process.execSync('git rev-parse --abbrev-ref HEAD').toString();
-const sanitizedBranchName = branchName.includes("feat/") ? branchName.replace("feat/", "").trim() : branchName.replace("/", "-").trim();
+const sanitizeBranchName = () => {
+  // https://semver.org/#spec-item-9
+  const invalidCharacters = /[&\/\\#,+()$~%_'":*?<>{}]/g;
+  const branchName = child_process
+    .execSync('git branch --show-current')
+    .toString()
+    .replace(invalidCharacters, "-")
+    .trim();
 
-console.log(">>>>>>", sanitizedBranchName);
+  return branchName;
+};
 
 module.exports = {
   "branches": [
@@ -11,7 +18,7 @@ module.exports = {
     "main",
     {name: "beta", prerelease: true},
     {name: "alpha", prerelease: true},
-    { name: "feat/**", prerelease:  sanitizedBranchName}
+    { name: "feat/**", prerelease:  sanitizeBranchName()}
   ],
   "plugins": [
     [
