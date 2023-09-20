@@ -9,13 +9,24 @@ const sanitizeBranchName = () => {
     .trim();
 };
 
+const branches = []
+
+
+if (sanitizeBranchName().includes("feat")) {
+  const rawBranchName = child_process.execSync('git branch --show-current')
+    .toString()
+    .trim();
+  branches.push({ name: rawBranchName, prerelease:  sanitizeBranchName()})
+}
+
+
 module.exports = {
   "branches": [
     "+([0-9])?(.{+([0-9]),x}).x",
     "main",
     {name: "beta", prerelease: true},
     {name: "alpha", prerelease: true},
-    { name: "feat/**", prerelease:  sanitizeBranchName()}
+    ...branches,
   ],
   "plugins": [
     [
