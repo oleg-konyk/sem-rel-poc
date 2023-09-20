@@ -20,6 +20,7 @@ if (sanitizeBranchName().includes("feat")) {
 }
 
 
+
 module.exports = {
   "branches": [
     "+([0-9])?(.{+([0-9]),x}).x",
