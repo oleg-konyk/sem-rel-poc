@@ -1,25 +1,20 @@
 const child_process = require("child_process");
 
-const sanitizeBranchName = () => {
+const handleFeatureBranch = () => {
   const invalidCharacters = /[&\/\\#,+()$~%_'":*?<>{}]/g;
-  
-  return child_process.execSync('git branch --show-current')
-    .toString()
-    .replace(invalidCharacters, "-")
-    .trim();
-};
-
-const branches = []
-
-
-if (sanitizeBranchName().includes("feat")) {
   const rawBranchName = child_process.execSync('git branch --show-current')
     .toString()
     .trim();
-  branches.push({ name: rawBranchName, prerelease:  sanitizeBranchName()})
-}
+  const sanitizedBranchName = rawBranchName
+    .replace(invalidCharacters, "-")
+    .trim();
 
+    if (rawBranchName.includes("feat/")) {
+      return [{ name: rawBranchName, prerelease: sanitizedBranchName }];
+    }
 
+    return [];
+};
 
 module.exports = {
   "branches": [
@@ -27,7 +22,7 @@ module.exports = {
     "main",
     {name: "beta", prerelease: true},
     {name: "alpha", prerelease: true},
-    ...branches,
+    ...handleFeatureBranch(),
   ],
   "plugins": [
     [
