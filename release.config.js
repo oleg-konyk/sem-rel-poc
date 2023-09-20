@@ -1,17 +1,13 @@
 const child_process = require("child_process");
 
 const sanitizeBranchName = () => {
-  // https://semver.org/#spec-item-9
   const invalidCharacters = /[&\/\\#,+()$~%_'":*?<>{}]/g;
-  const branchName = child_process
-    .execSync('git branch --show-current')
+  
+  return child_process.execSync('git branch --show-current')
     .toString()
     .replace(invalidCharacters, "-")
     .trim();
-
-  return branchName;
 };
-
 
 module.exports = {
   "branches": [
